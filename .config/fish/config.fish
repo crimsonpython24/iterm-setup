@@ -74,7 +74,7 @@ set -g tide_time_format '%H:%M:%S'
 
 # custom function to show input mode
 # function _tide_item_bind_mode
-   # switch $fish_bind_mode
+    #switch $fish_bind_mode
       #case default
 	    #_tide_print_item keyb1 $tide_example_icon' ' "D"
       #case insert

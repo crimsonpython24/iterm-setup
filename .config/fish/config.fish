@@ -52,7 +52,7 @@ bind \' _autopair_insert_same\ \\\'
 # tide prompt options
 set -g tide_prompt_add_newline_before false
 set -g tide_left_prompt_frame_enabled true
-set -g tide_left_prompt_items status context pwd aws chruby crystal docker go java kubectl node php rustc terraform virtual_env git
+set -g tide_left_prompt_items status vi_mode context pwd aws chruby crystal docker go java kubectl nix_shell node php private_mode rustc terraform toolbox virtual_env git
 set -g tide_left_prompt_suffix 
 set -g tide_right_prompt_frame_enabled true
 set -g tide_right_prompt_prefix
@@ -68,25 +68,26 @@ set -g tide_context_always_display true
 set -g tide_context_bg_color CCCCCC
 set -g tide_context_color_default 005282
 set -g tide_context_hostname_parts 1
+set -g tide_status_icon_failure
 set -g tide_time_bg_color normal
 set -g tide_time_color 777777
 set -g tide_time_format '%H:%M:%S'
 
 # custom function to show input mode
 # function _tide_item_bind_mode
-    #switch $fish_bind_mode
-      #case default
-	    #_tide_print_item keyb1 $tide_example_icon' ' "D"
-      #case insert
-	    #_tide_print_item keyb1 $tide_example_icon' ' "I"
-      #case replace_one
-	    #_tide_print_item keyb1 $tide_example_icon' ' "R"
-      #case visual
-	    #_tide_print_item keyb1 $tide_example_icon' ' "V"
-      #case '*'
-	    #_tide_print_item keyb1 $tide_example_icon' ' "?"
-      #end
-  #end
+#   switch $fish_bind_mode
+#     case default
+#       _tide_print_item bind_mode $tide_example_icon' ' "D"
+#     case insert
+#       _tide_print_item bind_mode $tide_example_icon' ' "I"
+#     case replace_one
+#       _tide_print_item bind_mode $tide_example_icon' ' "R"
+#     case visual
+#       _tide_print_item bind_mode $tide_example_icon' ' "V"
+#     case '*'
+#       _tide_print_item bind_mode $tide_example_icon' ' "?"
+#   end
+# end
 # funcsave _tide_item_bind_mode
 set -g tide_bind_mode_color 222222
 set -g tide_bind_mode_bg_color 888888

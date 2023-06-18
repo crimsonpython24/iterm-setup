@@ -59,8 +59,8 @@ set -g tide_right_prompt_prefix
 set -g tide_right_prompt_suffix
 set -g tide_right_prompt_items time
 
-set -g tide_status_bg_color FFFFFF
-set -g tide_status_bg_color_failure FFFFFF
+set -g tide_status_bg_color EEEEEE
+set -g tide_status_bg_color_failure EEEEEE
 set -g tide_status_color 222222
 set -g tide_status_color_failure FF0000
 set -g tide_pwd_bg_color 333333
@@ -68,6 +68,7 @@ set -g tide_context_always_display true
 set -g tide_context_bg_color CCCCCC
 set -g tide_context_color_default 005282
 set -g tide_context_hostname_parts 1
+set -g tide_status_icon '0'
 set -g tide_status_icon_failure
 set -g tide_time_bg_color normal
 set -g tide_time_color 777777

@@ -1,0 +1,33 @@
+\documentclass{article}
+
+\input{"~/.config/latex/template.sty"}
+\usepackage{tabularx}
+
+\title{PDF Test}
+\author{Warren Wang}
+\date{\today}
+
+\begin{document}
+  \maketitle
+  \sit
+    \it this is a heading item
+    \ssit
+      \it this is a sub item
+      \it this is another sub item
+    \eeit
+    \it parent and children lists have different spacing
+    \ssit
+      \it \ita{this} text is italicized
+      \it \bo{this} text is bolded
+      \it \und{this} test is underlined
+    \eeit 
+    \it this is a line that will reach the right end of the page, just for the purpose of testing out the page width
+  \eit
+  %
+  \subs{Test Table}
+  \vsp{-0.1in}
+  \hspace{0.25in}\begin{tabularx}{\tw-0.25in}{ >{\rgr}p{10cm} | X }     
+    item1 & some test explanation \\
+    item2 & some more test explanation 
+  \end{tabularx}
+\end{document}

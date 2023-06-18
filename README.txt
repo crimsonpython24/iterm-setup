@@ -1,3 +1,4 @@
+-Shell-
 1. Change the font to source code pro + bundled nerd font (TTF in the "tweaks/iterm" desktop folder)
 2. Brew packages
      - exa: "ls" replacement [alias --save ls exa -1 -l -F -h -a --git --color always --no-permissions --time-style default --sort name --group-directories-first]
@@ -15,3 +16,6 @@
      - nickeb96/puffer-fish (for !! and !$, which are not shipped in fish)
      - ilancosman/tide@v5 (theming)
 4. Theme: customized Tide, see config.fish and the bind_mode custom function for more details
+
+-Vim-
+[https://github.com/josean-dev/dev-environment-files] the setup is so good it should be illegal

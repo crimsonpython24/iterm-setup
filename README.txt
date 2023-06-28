@@ -3,8 +3,9 @@
 2. Brew packages
      - exa: "ls" replacement [alias --save ls exa -1 -l -F -h -a --git --color always --no-permissions --time-style default --sort name --group-directories-first]
      - git-delta: highlights, coloring, and more in git diff [create "~/.gitignore" with all the tweaks]
-     - [manual install] peco: interactive filter, usage e.g., ps aux | peco
-3. Install fisher (extension manager)
+     - peco: interactive filter, usage e.g., ps aux | peco
+3. Install languages: python, node
+4. Install fisher (extension manager)
      - patrickf1/colored_man_pages.fish (the name suggests)
      - jorgebucaran/nvm.fish (Node.js version manager; install official package and use system)
      - markcial/upto (goes to any parent folder, override fish alias "ut" --save)
@@ -15,7 +16,12 @@
      - meaningful-ooo/sponge (cleans out incorrect commands "127" besides the most recent two)
      - nickeb96/puffer-fish (for !! and !$, which are not shipped in fish)
      - ilancosman/tide@v5 (theming)
-4. Theme: customized Tide, see config.fish and the bind_mode custom function for more details
+5. Theme: customized Tide, see config.fish and the bind_mode custom function for more details
 
 -Vim-
 [https://github.com/josean-dev/dev-environment-files] the setup is so good it should be illegal
+
+Debug notes:
+     - :TSInstall markdown markdown_inline
+     - Run :Mason to view all downloads, :MasonLog for history, and :MasonInstall to make up
+     - pyre requires python to be installed beforehand

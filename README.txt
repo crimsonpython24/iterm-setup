@@ -25,3 +25,4 @@ Debug notes:
      - :TSInstall markdown markdown_inline
      - Run :Mason to view all downloads, :MasonLog for history, and :MasonInstall to make up
      - pyre requires python to be installed beforehand
+     - packer will be installed automatically once neovim is launched

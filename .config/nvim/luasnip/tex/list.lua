@@ -24,10 +24,10 @@ return {
 		},
 		imp.fmta(
 			[[
-        \begin{itemize}
-          <>
-        \end{itemize}
-      ]],
+				\begin{itemize}
+					<>
+				\end{itemize}
+			]],
 			{ imp.i(1) }
 		)
 	),
@@ -39,10 +39,10 @@ return {
 		},
 		imp.fmta(
 			[[
-        \begin{itemize}[topsep=0pt, itemsep=0pt, partopsep=0pt]
-          <>
-        \end{itemize}
-      ]],
+				\begin{itemize}[topsep=0pt, itemsep=0pt, partopsep=0pt]
+					<>
+				\end{itemize}
+			]],
 			{ imp.i(1) }
 		)
 	),

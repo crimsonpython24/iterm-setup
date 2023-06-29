@@ -27,10 +27,10 @@ return {
 		},
 		imp.fmta(
 			[[
-        \begin{figure}[htbp!]
-          <>
-        \end{figure}
-      ]],
+				\begin{figure}[htbp!]
+					<>
+				\end{figure}
+			]],
 			{ imp.i(1) }
 		)
 	),
@@ -41,10 +41,10 @@ return {
 		},
 		imp.fmta(
 			[[
-        \beginf\centering
-          \includegraphics[scale=<>]{<>} 
-        \endf
-      ]],
+				\beginf\centering
+					\includegraphics[scale=<>]{<>} 
+				\endf
+			]],
 			{ imp.i(1), imp.i(2) }
 		)
 	),

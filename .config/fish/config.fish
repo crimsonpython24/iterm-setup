@@ -94,3 +94,7 @@ set -g tide_bind_mode_color 222222
 set -g tide_bind_mode_bg_color 888888
 set -g tide_bind_mode_icon ''
 set --prepend tide_left_prompt_items bind_mode
+
+# Setting PATH for Python 3.11
+# The original version is saved in /Users/warren/.config/fish/config.fish.pysave
+set -x PATH "/Library/Frameworks/Python.framework/Versions/3.11/bin" "$PATH"

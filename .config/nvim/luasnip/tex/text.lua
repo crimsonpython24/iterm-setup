@@ -15,13 +15,13 @@ return {
 		snippetType = "autosnippet",
 	}, imp.fmta("\\textit{<>}", { imp.i(1) })),
 	imp.s({
-		trig = ";tra",
+		trig = ";tr",
 		snippetType = "autosnippet",
 	}, {
 		imp.t("\\textrightarrow"),
 	}),
 	imp.s({
-		trig = ";tla",
+		trig = ";tl",
 		snippetType = "autosnippet",
 	}, {
 		imp.t("\\textleftarrow"),

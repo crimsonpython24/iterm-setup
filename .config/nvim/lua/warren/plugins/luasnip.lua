@@ -22,10 +22,16 @@ vim.cmd([[
   imap <silent><expr> <S-Tab> luasnip#jumpable(-1) ? '<Plug>luasnip-jump-prev' : '<S-Tab>'
   smap <silent><expr> <S-Tab> luasnip#jumpable(-1) ? '<Plug>luasnip-jump-prev' : '<S-Tab>'
 
-  " Cycle forward through choice nodes with Control-f (for example)
-  imap <silent><expr> <C-f> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-g>'
-  smap <silent><expr> <C-f> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-g>'
+  " Cycle forward through choice nodes with Control-g (for example)
+  imap <silent><expr> <C-g> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-g>'
+  smap <silent><expr> <C-g> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-g>'
 ]])
+
+vim.keymap.set(
+	"n",
+	"<Leader>rr",
+	'<Cmd>lua require("luasnip.loaders.from_lua").load({paths = "~/.config/nvim/LuaSnip/"})<CR>'
+)
 
 -- Load all snippets from the nvim/LuaSnip directory at startup
 require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/LuaSnip/" })

@@ -3,22 +3,18 @@ local imp = require("_imports")
 
 return {
 	imp.s({
-		trig = ";it",
+		trig = ";ii",
 		dscr = "expansion for list item",
 		snippetType = "autosnippet",
-	}, {
-		imp.t("\\item"),
-	}),
+	}, imp.t("\\item")),
 	imp.s({
 		trig = ";sl",
 		dscr = "set global list spacing, unless stated otherwise",
 		snippetType = "autosnippet",
-	}, {
-		imp.t("\\setlist[itemize]{parsep=0pt}"),
-	}),
+	}, imp.t("\\setlist[itemize]{parsep=0pt}")),
 	imp.s(
 		{
-			trig = ";si",
+			trig = ";ss",
 			dscr = "creates a top-level list/itemize environment",
 			snippetType = "autosnippet",
 		},
@@ -33,7 +29,7 @@ return {
 	),
 	imp.s(
 		{
-			trig = ";ssi",
+			trig = ";sss",
 			dscr = "creates a nested list/itemize environment",
 			snippetType = "autosnippet",
 		},
@@ -44,6 +40,21 @@ return {
 				\end{itemize}
 			]],
 			{ imp.i(1) }
+		)
+	),
+	imp.s(
+		{ trig = ";ev", snippetType = "autosnippet" },
+		imp.fmta(
+			[[
+				\begin{<>}
+					<>
+				\end{<>}
+			]],
+			{
+				imp.i(1),
+				imp.i(2),
+				imp.rep(1),
+			}
 		)
 	),
 }

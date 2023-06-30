@@ -29,7 +29,7 @@ return {
 	),
 	imp.s(
 		{
-			trig = ";sss",
+			trig = ";si",
 			dscr = "creates a nested list/itemize environment",
 			snippetType = "autosnippet",
 		},

@@ -8,7 +8,8 @@ opt.number = true
 opt.tabstop = 2
 opt.shiftwidth = 2
 opt.expandtab = false
-opt.autoindent = true
+opt.autoindent = false
+opt.smartindent = false
 
 -- line wrapping
 opt.wrap = false

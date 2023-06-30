@@ -19,7 +19,7 @@ return {
 		snippetType = "autosnippet",
 	}, imp.fmta("\\subsection*{<>}", { imp.i(1) })),
 	imp.s({
-		trig = ";vsub",
+		trig = ";nsub",
 		snippetType = "autosnippet",
 	}, imp.fmta("\\setlength{\\parskip}{-3pt}\\subsection*{<>}", { imp.i(1) })),
 	imp.s(

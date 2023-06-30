@@ -66,8 +66,10 @@ return {
 		imp.fmta(
 			[[
 				\hspace{<>}\begin{tabularx}{\textwidth-<>}{ >>{\raggedright}p{<>} | <> }
+					<>
+				\end{tabularx}
 			]],
-			{ imp.i(1), imp.rep(1), imp.i(2), imp.i(3) }
+			{ imp.i(1), imp.rep(1), imp.i(2), imp.i(3), imp.i(4) }
 		)
 	),
 }

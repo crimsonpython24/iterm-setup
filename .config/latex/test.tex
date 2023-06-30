@@ -1,0 +1,41 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{calc}
+\usepackage{changepage}
+\usepackage{tabularx}
+
+\title{PDF Test}
+\author{Warren Wang}
+\date{\today}
+
+\begin{document}
+	\maketitle
+	\begin{itemize}
+		\item this is a heading item
+		\begin{itemize}[topsep=0pt, itemsep=0pt, partopsep=0pt]
+			\item this is a sub item
+			\item this is another sub item
+		\end{itemize}
+		\item parent and children lists have different spacing
+		\begin{itemize}[topsep=0pt, itemsep=0pt, partopsep=0pt]
+			\item \textit{this} text is italicized
+			\item \textbf{this} text is bolded
+			\item \underline{this} text is underlined
+		\end{itemize}
+		\item this is a line that will reach the right end of the page, just for the purpose of testing out the page width
+	\end{itemize}
+	\setlength{\parskip}{-3pt}\subsection*{Test Table}
+	% \vspace{-0.05in}
+	\hspace{0.25in}\begin{tabularx}{\textwidth-0.25in}{ >{\raggedright}p{4in} | X }
+		item 1 & some test explanation \\
+		item 2 & some test explanation
+	\end{tabularx}
+\end{document}

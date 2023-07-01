@@ -1,0 +1,66 @@
+removeTrailingWhitespace: 1
+fileContentsEnvironments:
+  filecontents: 0
+  filecontents*: 0
+indentPreamble: 0
+preambleCommandsBeforeEnvironments: 0
+
+lookForAlignDelims:
+  tabular: 1
+  tabularx: 1
+indentAfterItems:
+  itemize: 1
+  itemize*: 1
+  enumerate: 1
+  enumerate*: 1
+  description: 1
+  description*: 1
+  list: 1
+  tabularx: 1
+
+specialBeginEnd:
+  displayMath:
+    begin: (?<!\\)\\\[ # \[ but *not* \\[
+    end: \\\] # \]
+    lookForThis: 1
+  inlineMath:
+    begin: (?<!\$)(?<!\\)\$(?!\$) # $ but *not* \$ or $$
+    end: (?<!\\)\$(?!\$) # $ but *not* \$ or $$
+    lookForThis: 1
+  displayMathTeX:
+    begin: \$\$ # $$
+    end: \$\$ # $$
+    lookForThis: 1
+  leftRightSquare:
+    begin: '\\left\['
+    end: '\\right\]'
+    lookForThis: 1
+  If:
+    begin: '\\If'
+    middle:
+      - '\\ElsIf'
+      - '\\Else'
+    end: '\\EndIf'
+    lookForThis: 1
+  specialBeforeCommand: 0
+
+noAdditionalIndent:
+  document: 0
+  item: 1
+  displayMath: 0
+noAdditionalIndentGlobal:
+  optionalArguments: 0
+  mandatoryArguments: 0
+  # commands: 1
+indentRulesGlobal:
+  environments: "\t"
+  optionalArguments: "\t"
+  mandatoryArguments: "\t"
+  ifElseFi: "\t"
+  specialBeginEnd: "\t"
+  commands: "\t"
+# if this is used later
+# indentAfterHeadings:
+#   paragraph:
+#     indentAfterThisHeading: 1
+#     level: 1

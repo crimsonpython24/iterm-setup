@@ -1,3 +1,9 @@
+noIndentBlock:
+  block:
+    begin: '%\hstartnoindent'
+    end: '%\hendnoindent'
+    lookforthis: 0
+
 removeTrailingWhitespace: 1
 fileContentsEnvironments:
   filecontents: 0
@@ -8,6 +14,9 @@ preambleCommandsBeforeEnvironments: 0
 lookForAlignDelims:
   tabular: 1
   tabularx: 1
+  longtable: 1
+  array: 1
+  matrix: 1
 indentAfterItems:
   itemize: 1
   itemize*: 1
@@ -16,7 +25,11 @@ indentAfterItems:
   description: 1
   description*: 1
   list: 1
+  tabular: 1
   tabularx: 1
+  longtable: 1
+  array: 1
+  matrix: 1
 
 specialBeginEnd:
   displayMath:
@@ -44,23 +57,29 @@ specialBeginEnd:
     lookForThis: 1
   specialBeforeCommand: 0
 
-noAdditionalIndent:
-  document: 0
-  item: 1
-  displayMath: 0
-noAdditionalIndentGlobal:
-  optionalArguments: 0
-  mandatoryArguments: 0
-  # commands: 1
-indentRulesGlobal:
-  environments: "\t"
-  optionalArguments: "\t"
-  mandatoryArguments: "\t"
-  ifElseFi: "\t"
-  specialBeginEnd: "\t"
-  commands: "\t"
-# if this is used later
 # indentAfterHeadings:
 #   paragraph:
 #     indentAfterThisHeading: 1
 #     level: 1
+
+noAdditionalIndent:
+  document: 0
+  item: 1
+noAdditionalIndentGlobal:
+  environments: 0
+  commands: 0
+  optionalArguments: 0
+  mandatoryArguments: 0
+  ifElseFi: 0
+  items: 0
+  specialBeginEnd: 0
+  afterHeading: 0
+indentRulesGlobal:
+  environments: "\t"
+  commands: "\t"
+  optionalArguments: "\t"
+  mandatoryArguments: "\t"
+  ifElseFi: "\t"
+  items: "\t"
+  specialBeginEnd: "\t"
+  afterHeading: 1

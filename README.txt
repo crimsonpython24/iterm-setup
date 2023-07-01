@@ -19,10 +19,15 @@
 5. Theme: customized Tide, see config.fish and the bind_mode custom function for more details
 
 -Vim-
-[https://github.com/josean-dev/dev-environment-files] the setup is so good it should be illegal
+[https://github.com/josean-dev/dev-environment-files]
 
 Debug notes:
      - :TSInstall markdown markdown_inline
      - Run :Mason to view all downloads, :MasonLog for history, and :MasonInstall to make up
      - pyre requires python to be installed beforehand
      - packer will be installed automatically once neovim is launched
+
+Setup guides:
+     - luasnip     [https://www.ejmastnak.com/tutorials/vim-latex/luasnip/]
+     - vimtex      [https://github.com/lervag/vimtex] should be enough, use above link for keybinds
+     - latexindent [https://latexindentpl.readthedocs.io/en/latest/sec-default-user-local.html]

@@ -90,7 +90,6 @@ set -g tide_time_format '%H:%M:%S'
 #   end
 # end
 # funcsave _tide_item_bind_mode
-
 set -g tide_bind_mode_color 222222
 set -g tide_bind_mode_bg_color 888888
 set -g tide_bind_mode_icon ''

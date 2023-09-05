@@ -18,7 +18,7 @@ function fish_greeting
 	'(set_color normal)
 end
 
-# alias --save ls "exa -1lFha --git --color always --no-permissions --time-style default --sort name --icons"
+# alias --save ls "exa -1lFha --git --color always --no-permissions --time-style default --sort name --no-icons"
 # alias --save ut "upto"
 # alias --save python "python3"
 # alias --save pip "pip3"
@@ -90,6 +90,7 @@ set -g tide_time_format '%H:%M:%S'
 #   end
 # end
 # funcsave _tide_item_bind_mode
+
 set -g tide_bind_mode_color 222222
 set -g tide_bind_mode_bg_color 888888
 set -g tide_bind_mode_icon ''

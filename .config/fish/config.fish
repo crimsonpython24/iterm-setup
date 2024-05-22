@@ -1,3 +1,7 @@
+if status is-interactive
+    # Commands to run in interactive sessions can go here
+end
+
 function fish_greeting
     echo '                 '(set_color F00)'___
   ___======____='(set_color FF7F00)'-'(set_color FF0)'-'(set_color FF7F00)'-='(set_color F00)')
@@ -18,22 +22,18 @@ function fish_greeting
 	'(set_color normal)
 end
 
-# alias --save ls "exa -1lFha --git --color always --no-permissions --time-style default --sort name --no-icons"
+# alias --save ls "lsd -aFl --icon never --date relative --size short --blocks "permission,size,date,name,inode,git""
 # alias --save ut "upto"
 # alias --save python "python3"
 # alias --save pip "pip3"
-# alias --save vim "nvim"
-# alias --save vi "nvim"
+# alias --save vim "vim"
+# alias --save vi "vim"
 abbr -a speedtest "for i in (seq 1 10); /usr/bin/time fish -i -c exit; end"
 
 set -x EDITOR nvim
 set fish_syntax_highlighting
 set fish_autosuggestions
 
-set sponge_successful_exit_codes 0
-set sponge_allow_previously_successful false
-set sponge_delay 2
-set sponge_purge_only_on_exit false
 fish_default_key_bindings
 fzf_configure_bindings --variables=\cv --directory=\cf --git_log=\cg --history=\cr
 
@@ -95,6 +95,6 @@ set -g tide_bind_mode_bg_color 888888
 set -g tide_bind_mode_icon ''
 set --prepend tide_left_prompt_items bind_mode
 
-# Setting PATH for Python 3.11
+# Setting PATH for Python 3.12
 # The original version is saved in /Users/warren/.config/fish/config.fish.pysave
-set -x PATH "/Library/Frameworks/Python.framework/Versions/3.11/bin" "$PATH"
+set -x PATH "/Library/Frameworks/Python.framework/Versions/3.12/bin" "$PATH"

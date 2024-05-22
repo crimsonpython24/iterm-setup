@@ -18,7 +18,7 @@
      - ilancosman/tide@v5 (theming)
 5. Theme: customized Tide, see config.fish and the bind_mode custom function for more details
 
--Vim- amix/vimrc
+-Vim- amix/vimrc, might need more config
 
 -nVim-
 [https://github.com/josean-dev/dev-environment-files]

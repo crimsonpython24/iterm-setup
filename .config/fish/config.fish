@@ -30,7 +30,7 @@ end
 # alias --save vi "vim"
 abbr -a speedtest "for i in (seq 1 10); /usr/bin/time fish -i -c exit; end"
 
-set -x EDITOR nvim
+set -x EDITOR vim
 set fish_syntax_highlighting
 set fish_autosuggestions
 

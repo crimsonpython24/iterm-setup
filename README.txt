@@ -33,3 +33,7 @@ Setup guides:
      - luasnip     [https://www.ejmastnak.com/tutorials/vim-latex/luasnip/]
      - vimtex      [https://github.com/lervag/vimtex] should be enough, use above link for keybinds
      - latexindent [https://latexindentpl.readthedocs.io/en/latest/sec-default-user-local.html]
+
+Git error
+If you get an error message saying “Inappropriate ioctl for device”, do this:
+run export GPG_TTY=$(tty) and/or add that to your ~/.bashrc or ˜/.bash_profile

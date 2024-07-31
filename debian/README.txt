@@ -1,3 +1,5 @@
+INSTALLATION LOG
+
 1. Desktop icon fix
 $ sudo apt install gnome-shell-extension-desktop-icons-ng
 
@@ -94,7 +96,6 @@ $ sudo apt install gnome-shell-extension-desktop-icons-ng
   (Copy the OTF file into /usr/share/fonts/opentype)
   > run sudo fc-cache -f -v
   And then change the terminal font in tweaks
-
 
 7. gnupg
   Should come with debian. Follow github instructions on keygen

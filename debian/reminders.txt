@@ -1,1 +1,9 @@
-some sort of quick bluetooth action menu and clipboard and screenshot tool
+necessicities
+- quick bluetooth action menu
+- clipboard history tool
+- screenshot tool
+- screen recording tool
+
+nice to haves
+- wifi monitoring
+- battery control/mgmt

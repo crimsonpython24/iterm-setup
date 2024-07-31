@@ -7,6 +7,7 @@ $ sudo apt install gnome-shell-extension-desktop-icons-ng
   a. References
     https://www.techrepublic.com/article/how-to-enable-the-zram-module-for-faster-swapping-on-linux/
     https://forums.linuxmint.com/viewtopic.php?t=322567
+    https://github.com/M-Gonzalo/zramd
   b. Steps
     i. In "/etc/modules-load.d/zram.conf" type zram
     ii. In "/etc/udev/rules.d/99-zram.rules" type KERNEL=="zram0", ATTR{disksize}="512M",TAG+="systemd"
@@ -90,7 +91,6 @@ $ sudo apt install gnome-shell-extension-desktop-icons-ng
     $ sudo cp /home/warren/anaconda3/pkgs/libstdcxx-ng-14.1.0-hc0a3c3a_0/lib/libstdc++.so.6 /usr/lib/x86_64-linux-gnu
   i. sudo make install and follow the repository's setup guide
 
-
 6. Font book nerd font gnome fix
   > apt install font-manager
   (Copy the OTF file into /usr/share/fonts/opentype)
@@ -112,3 +112,39 @@ $ sudo apt install gnome-shell-extension-desktop-icons-ng
       "controlUrl": ""
     }
   }
+
+9. Passmark
+  Deps:
+  $ sudo apt-get install libncurses5 libncurses5-dev ia32-libs
+
+10. Pinyin
+  $ sudo apt-get install ibus-pinyin
+  $ sudo apt-get install ibus-sunpinyin
+  $ ibus restart
+  
+11. Extensions
+  - Just Perfection (need corresponding Chrome ext.)
+  - Impatience (gfxmonk)
+  - Use Dolphin (KDE) as file manager
+    $ find /usr/share/applications/ -iname "*dolphin*"
+    $ xdg-mime default org.gnome.Nautilus.desktop inode/directory
+    $ xdg-mime query default inode/directory
+    & uninstall the default files app in the app store
+  - nala over apt (just apt update, install, and update again)
+  - Dash-to-panel, AppIndicator KStatus, OpenWeather
+
+12. Check Desktop Env
+  $ echo $XDG_SESSION_TYPE
+  
+13. Change swappiness to 0
+  /etc/sysctl.conf --> vm.swappiness=0
+  $ cat /proc/sys/vm/swappiness
+  
+14. Debloat
+  sudo apt purge iagno lightsoff four-in-a-row gnome-robots pegsolitaire gnome-2048 hitori gnome-klotski gnome-mines gnome-mahjongg gnome-sudoku quadrapassel swell-foop gnome-tetravex gnome-taquin aisleriot gnome-chess five-or-more gnome-nibbles tali ; sudo apt autoremove
+  
+15. Show desktop icons
+  https://github.com/DEM0NAssissan7/desktop-icons-neo
+  Depends on nautilus (https://packages.debian.org/sid/all/nautilus-data/download)
+  
+better alt-tab, try window manager again, along w/ last two reddit pages, some way to periodically clean out tmp/cached files, don't use swap, etc.

@@ -98,6 +98,8 @@ $ sudo apt install gnome-shell-extension-desktop-icons-ng
 
 7. gnupg
   Should come with debian. Follow github instructions on keygen
+  Patch:
+  $ git config --global user.email yjwarrenwang@protonmail.com
 
 8. vscodium
   in ~/.config/VSCodium, create product.json, and then add

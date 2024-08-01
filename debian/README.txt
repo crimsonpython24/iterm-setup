@@ -118,6 +118,7 @@ $ sudo apt install gnome-shell-extension-desktop-icons-ng
   $ sudo apt-get install libncurses5 libncurses5-dev ia32-libs
 
 10. Pinyin
+  Go into '/etc/locale.gen' and uncomment simplified/traditional Chinese locales
   $ sudo apt-get install ibus-pinyin
   $ sudo apt-get install ibus-sunpinyin
   $ ibus restart

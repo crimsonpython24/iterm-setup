@@ -149,3 +149,4 @@ $ sudo apt install gnome-shell-extension-desktop-icons-ng
   Depends on nautilus (https://packages.debian.org/sid/all/nautilus-data/download)
   
 better alt-tab, try window manager again, along w/ last two reddit pages, some way to periodically clean out tmp/cached files, don't use swap, etc.
+color picker: gcolor3

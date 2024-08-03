@@ -26,14 +26,18 @@ $ sudo apt install gnome-shell-extension-desktop-icons-ng
 
       [Install]
       WantedBy=multi-user.target
-    v. Exit; in terminal, type 
+    v. Exit; in terminal, type
       $ sudo systemctl enable zram
-    vi. Reboot, and check with 
+    vi. Reboot, and check with
       $ cat /proc/swaps
 
 3. noatime
   # File: sudo nano /etc/fstab
   add "noatime" to all ext4 partitions (comma without whitespace under the options column)
+  Also change bufferfloat settings /etc/sysctl.conf
+    net.ipv4.tcp_congestion_control = bbr
+    net.ipv4.tcp_notsent_lowat = 16384
+    net.core.default_qdisc = fq_codel
 
 4. Install fish, cmake, and git
   > For anything that is missing, find their source repo and follow the instructions
@@ -45,13 +49,13 @@ $ sudo apt install gnome-shell-extension-desktop-icons-ng
 5. corectrl
   > Possibly not worth all the effort?
   a. Dependencies
-    $ sudo apt-get update && sudo apt-get install build-essential 
+    $ sudo apt-get update && sudo apt-get install build-essential
     $ sudo apt install qtbase5-dev qt5-qmake qtbase5-dev-tools
     And then install cmake & add to fish path
   b. Qt stuffs
     $ sudo apt install libdrm-dev gcc cmake libqt4-svg libqt5svg5 qml-module-qtquick-controls qml-module-qtquick-controls2 qml-module-qtquick-controls qml-module-qtquick-layouts qml-module-qtcharts qml-module-qt-labs-platform libkf5archive5 extra-cmake-modules libqt5quickcontrols2-5 qtdeclarative5-dev libqt5charts5-dev libqt5svg5-dev qt4-linguist-tools qttools5-dev qttools5-dev-tools libkf5auth-dev libkf5archive-dev libbotan-2-dev libbotan-2-doc python3-botan qtdeclarative5-dev libqt5charts5-dev libqt5svg5-dev sysvinit-utils hwdata mesa-utils util-linux
-    $ sudo apt install cmake extra-cmake-modules qttools5-dev qtdeclarative5-dev libqt5charts5-dev libqt5svg5-dev libbotan-2-dev libqca-qt5-2-dev libdrm-dev qtbase5-dev libegl1-mesa-dev libegl-dev libquazip5-dev libpolkit-gobject-1-dev libdbus-1-dev 
-    $ sudo apt install qml-module-qtquick2 qml-module-qtquick-extras qml-module-qtcharts libbotan2-19 
+    $ sudo apt install cmake extra-cmake-modules qttools5-dev qtdeclarative5-dev libqt5charts5-dev libqt5svg5-dev libbotan-2-dev libqca-qt5-2-dev libdrm-dev qtbase5-dev libegl1-mesa-dev libegl-dev libquazip5-dev libpolkit-gobject-1-dev libdbus-1-dev
+    $ sudo apt install qml-module-qtquick2 qml-module-qtquick-extras qml-module-qtcharts libbotan2-19
   c. catch2
     $ git clone https://github.com/catchorg/Catch2.git
     $ cd Catch2
@@ -59,7 +63,7 @@ $ sudo apt install gnome-shell-extension-desktop-icons-ng
     $ sudo cmake --build build/ --target install
   d. trompeloeil
     $ git clone https://github.com/rollbear/trompeloeil.git
-    $ cd trompeloeil 
+    $ cd trompeloeil
     $ mkdir build ; cd build
     $ cmake -G "Unix Makefiles" ..
     $ sudo cmake --build . --target install
@@ -74,7 +78,7 @@ $ sudo apt install gnome-shell-extension-desktop-icons-ng
       $ ../configure --enable-languages=c,c++,fortran,objc,obj-c++,go --prefix="/usr/local"
       $ make -j $(nproc)
       $ sudo make install
-    iii. change cmake compiler 
+    iii. change cmake compiler
       $ export CC=/usr/local/bin/gcc
       $ export CXX=/usr/local/bin/g++
       $ cmake /path/to/your/project
@@ -122,13 +126,13 @@ $ sudo apt install gnome-shell-extension-desktop-icons-ng
   $ sudo apt-get install ibus-pinyin
   $ sudo apt-get install ibus-sunpinyin
   $ ibus restart
-  
+
 11. Extensions
   - Just Perfection (need corresponding Chrome ext.)
   - Impatience (gfxmonk)
   - Use Dolphin (KDE) as file manager
     $ find /usr/share/applications/ -iname "*dolphin*"
-    $ xdg-mime default org.gnome.Nautilus.desktop inode/directory
+    $ xdg-mime default org.gnome.(name).desktop inode/directory
     $ xdg-mime query default inode/directory
     & uninstall the default files app in the app store
   - nala over apt (just apt update, install, and update again)
@@ -136,17 +140,20 @@ $ sudo apt install gnome-shell-extension-desktop-icons-ng
 
 12. Check Desktop Env
   $ echo $XDG_SESSION_TYPE
-  
+
 13. Change swappiness to 0
   /etc/sysctl.conf --> vm.swappiness=0
   $ cat /proc/sys/vm/swappiness
-  
+
 14. Debloat
   sudo apt purge iagno lightsoff four-in-a-row gnome-robots pegsolitaire gnome-2048 hitori gnome-klotski gnome-mines gnome-mahjongg gnome-sudoku quadrapassel swell-foop gnome-tetravex gnome-taquin aisleriot gnome-chess five-or-more gnome-nibbles tali ; sudo apt autoremove
-  
+
 15. Show desktop icons
   https://github.com/DEM0NAssissan7/desktop-icons-neo
   Depends on nautilus (https://packages.debian.org/sid/all/nautilus-data/download)
-  
-better alt-tab, try window manager again, along w/ last two reddit pages, some way to periodically clean out tmp/cached files, don't use swap, etc.
-color picker: gcolor3
+
+16. Input performance
+  $ sudo apt install xserver-xorg-input-synaptics
+  $ sudo apt upgrade libinput-bin
+
+17. Auto-cpufreq (not used currently since Lenovo has a built-in firmware)

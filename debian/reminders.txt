@@ -7,3 +7,9 @@ necessicities
 nice to haves
 - wifi monitoring
 - battery control/mgmt
+
+better alt-tab, try window manager again, along w/ last two reddit pages, some way to periodically clean out tmp/cached files, don't use swap, etc.
+color picker: gcolor3
+
+some sort of clipboard manager and audio switcher, more performance optimizations, battery health monitor?
+blueooth fix (stability)

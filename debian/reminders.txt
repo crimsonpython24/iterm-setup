@@ -1,15 +1,15 @@
 necessicities
-- quick bluetooth action menu
-- clipboard history tool
-- screenshot tool
+- quick bluetooth action menu (v)
+- clipboard history tool (v)
+- screenshot tool (v)
 - screen recording tool
 
 nice to haves
 - wifi monitoring
-- battery control/mgmt
+- battery control/mgmt/health monitor
 
-better alt-tab, try window manager again, along w/ last two reddit pages, some way to periodically clean out tmp/cached files, don't use swap, etc.
-color picker: gcolor3
-
-some sort of clipboard manager and audio switcher, more performance optimizations, battery health monitor?
+better alt-tab
+try window manager again
+some way to periodically clean out tmp/cached files
+More performance optimizations
 blueooth fix (stability)

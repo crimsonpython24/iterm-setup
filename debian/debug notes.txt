@@ -1,0 +1,10 @@
+1. If audio doesn't work
+  open /usr/share/pulseaudio/alsa-mixer/paths/analog-output-speaker.conf
+  add in:
+    switch = mute
+    volume = merge
+  run:
+    $ sudo alsactl store
+    $ sudo alsactl restore
+  and reboot
+  run alsactl clean if needed

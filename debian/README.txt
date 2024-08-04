@@ -1,7 +1,6 @@
 INSTALLATION LOG
 
-1. Desktop icon fix
-$ sudo apt install gnome-shell-extension-desktop-icons-ng
+1. (Empty)
 
 2. zram
   a. References
@@ -138,6 +137,7 @@ $ sudo apt install gnome-shell-extension-desktop-icons-ng
     (after uninstalling, reboot to let Gnome register Dolphin as default file manager, and then re-install for (15))
   - nala over apt (just apt update, install, and update again)
   - Dash-to-panel, AppIndicator KStatus, OpenWeather
+  - gcolor3 for color picker
 
 12. Check Desktop Env
   $ echo $XDG_SESSION_TYPE
@@ -181,18 +181,36 @@ $ sudo apt install gnome-shell-extension-desktop-icons-ng
     $ apt -t unstable install gnome-tweaks
     (then install bluetooth-quick-connect and reboot)
 
-19. clipboard-indicator (c-F9 for menu, disable tray icon)
-
-20. fail2ban (default config)
-
-21. Clamav
+19. Clamav
   First download Clamav from the official website
   $ sudo apt install clamav clamav-daemon clamav-freshclam clamtk
   Then download the plugin (https://gitlab.com/dave_m/clamtk/-/wikis/Downloads)
 
-22. ufw
+20. ufw (firewall)
   $ sudo install ufw
   $ ufw enable
   Optional (likely breaks things):
   $ ufw default deny incoming
   $ ufw default allow outgoing
+
+21. Xanmod
+  Follow things on https://xanmod.org/
+  If AMD GPU firmwares are lacking, go to https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/log/
+
+22. Theme: https://github.com/vinceliuice/Fluent-gtk-theme
+
+23. More extensions:
+  a. clipboard-indicator (c-F9 for menu, disable tray icon)
+  b. fail2ban (default config)
+  c. Grand Theft Focus
+  d. Flameshot
+    https://flameshot.org/docs/guide/key-bindings/ (set as alt+shift+s)
+  e. Portmaster
+    To start the initial service:
+    $ mkdir -p /opt/safing/portmaster
+
+    $ wget -O /tmp/portmaster-start https://updates.safing.io/latest/linux_amd64/start/portmaster-start
+    $ sudo mv /tmp/portmaster-start /opt/safing/portmaster/portmaster-start
+    $ sudo chmod a+x /opt/safing/portmaster/portmaster-start
+
+    $ sudo /opt/safing/portmaster/portmaster-start --data /opt/safing/portmaster update

@@ -135,6 +135,7 @@ $ sudo apt install gnome-shell-extension-desktop-icons-ng
     $ xdg-mime default org.gnome.(name).desktop inode/directory
     $ xdg-mime query default inode/directory
     & uninstall the default files app in the app store
+    (after uninstalling, reboot to let Gnome register Dolphin as default file manager, and then re-install for (15))
   - nala over apt (just apt update, install, and update again)
   - Dash-to-panel, AppIndicator KStatus, OpenWeather
 
@@ -149,7 +150,7 @@ $ sudo apt install gnome-shell-extension-desktop-icons-ng
   sudo apt purge iagno lightsoff four-in-a-row gnome-robots pegsolitaire gnome-2048 hitori gnome-klotski gnome-mines gnome-mahjongg gnome-sudoku quadrapassel swell-foop gnome-tetravex gnome-taquin aisleriot gnome-chess five-or-more gnome-nibbles tali ; sudo apt autoremove
 
 15. Show desktop icons
-  https://github.com/DEM0NAssissan7/desktop-icons-neo
+  Gtk4 Desktop Icons NG (DING) by smedius
   Depends on nautilus (https://packages.debian.org/sid/all/nautilus-data/download)
 
 16. Input performance
@@ -157,3 +158,41 @@ $ sudo apt install gnome-shell-extension-desktop-icons-ng
   $ sudo apt upgrade libinput-bin
 
 17. Auto-cpufreq (not used currently since Lenovo has a built-in firmware)
+
+18. Bluetooth quick connect:
+  a. Side quest: update Gnome to unstable version (v.46)
+    Reference: https://raspberrytips.com/latest-gnome-installation-debian/
+    $ nano /etc/apt/sources.list
+      deb http://deb.debian.org/debian/ unstable main contrib
+      deb-src http://deb.debian.org/debian/ unstable main contrib
+    $ nano /etc/apt/preferences
+      Package: *
+        Pin: release a=bookworm
+        Pin-Priority: 500
+
+        Package: *
+        Pin: release a=unstable
+        Pin-Priority: 100
+    $ apt update
+    $ apt search gnome-session-bin
+    $ apt -t unstable search gnome-session-bin
+    $ apt -t unstable install gnome-session gnome-shell gnome-backgrounds gnome-applets gnome-control-center mutter gjs
+  b. Install the unstable repository
+    $ apt -t unstable install gnome-tweaks
+    (then install bluetooth-quick-connect and reboot)
+
+19. clipboard-indicator (c-F9 for menu, disable tray icon)
+
+20. fail2ban (default config)
+
+21. Clamav
+  First download Clamav from the official website
+  $ sudo apt install clamav clamav-daemon clamav-freshclam clamtk
+  Then download the plugin (https://gitlab.com/dave_m/clamtk/-/wikis/Downloads)
+
+22. ufw
+  $ sudo install ufw
+  $ ufw enable
+  Optional (likely breaks things):
+  $ ufw default deny incoming
+  $ ufw default allow outgoing

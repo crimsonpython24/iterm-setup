@@ -55,9 +55,12 @@ INSTALLATION LOG
     $ sudo apt install qtbase5-dev qt5-qmake qtbase5-dev-tools
     And then install cmake & add to fish path
   b. Qt stuffs
-    $ sudo apt install libdrm-dev gcc cmake libqt4-svg libqt5svg5 qml-module-qtquick-controls qml-module-qtquick-controls2 qml-module-qtquick-controls qml-module-qtquick-layouts qml-module-qtcharts qml-module-qt-labs-platform libkf5archive5 extra-cmake-modules libqt5quickcontrols2-5 qtdeclarative5-dev libqt5charts5-dev libqt5svg5-dev qt4-linguist-tools qttools5-dev qttools5-dev-tools libkf5auth-dev libkf5archive-dev libbotan-2-dev libbotan-2-doc python3-botan qtdeclarative5-dev libqt5charts5-dev libqt5svg5-dev sysvinit-utils hwdata mesa-utils util-linux
+    $ sudo apt install libdrm-dev gcc cmake libqt5svg5 qml-module-qtquick-controls qml-module-qtquick-controls2 qml-module-qtquick-controls qml-module-qtquick-layouts qml-module-qtcharts qml-module-qt-labs-platform libkf5archive5 extra-cmake-modules libqt5quickcontrols2-5 qtdeclarative5-dev libqt5charts5-dev libqt5svg5-dev qttools5-dev qttools5-dev-tools libkf5auth-dev libkf5archive-dev libbotan-2-dev libbotan-2-doc python3-botan qtdeclarative5-dev libqt5charts5-dev libqt5svg5-dev sysvinit-utils hwdata mesa-utils util-linux
     $ sudo apt install cmake extra-cmake-modules qttools5-dev qtdeclarative5-dev libqt5charts5-dev libqt5svg5-dev libbotan-2-dev libqca-qt5-2-dev libdrm-dev qtbase5-dev libegl1-mesa-dev libegl-dev libquazip5-dev libpolkit-gobject-1-dev libdbus-1-dev
-    $ sudo apt install qml-module-qtquick2 qml-module-qtquick-extras qml-module-qtcharts libbotan2-19
+    $ sudo apt install qml-module-qtquick2 qml-module-qtquick-extras qml-module-qtcharts libbotan-2-19
+    $ sudo apt install libquazip1-qt5-dev libspdlog-dev libpugixml-dev
+    $ qml-module-qtquick-controls qml-module-qtquick-layouts libqt5charts5-dev qtquickcontrols2-5-dev qml-module-qtcharts qml-module-qt-labs-platform
+    $ sudo apt install qml-module-qtcharts qml-module-qtquick-controls qml-module-qtquick-controls2 qml-module-qtquick-layouts qml-module-qt-labs-platform vulkan-tools
   c. catch2
     $ git clone https://github.com/catchorg/Catch2.git
     $ cd Catch2
@@ -87,11 +90,12 @@ INSTALLATION LOG
       $ make
       After this, check version of gcc/g++, and use "which gcc/g++" to find their path
   f. Check glib version
-    $ strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBCXX
+    $ strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBCXX_3.4.3
     Build needs 3.4.31 and .32
   g. (Maybe this isn't needed) sudo apt install libc6 libc6-dev libc6-dbg
   h. Install anaconda for newer GLIBCXX
-    $ conda install -c conda-forge libstdcxx-ng
+    (note: must run export before creating the build directory)
+    $ conda install -c conda-forge libstdcxx-ng libgcc
     Find newer files installed through Conda
     $ sudo find / -name "libstdc++.so.6"
     $ sudo cp /home/warren/anaconda3/pkgs/libstdcxx-ng-14.1.0-hc0a3c3a_0/lib/libstdc++.so.6 /usr/lib/x86_64-linux-gnu

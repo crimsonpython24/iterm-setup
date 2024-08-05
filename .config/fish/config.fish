@@ -22,7 +22,7 @@ function fish_greeting
 	'(set_color normal)
 end
 
-# alias --save ls "lsd -aFl --icon never --date relative --size short --blocks "permission,size,date,name,inode,git""
+# alias --save ls "lsd -aFl --icon never --date relative --size short --blocks "permission,size,date,name,inode""
 # alias --save ut "upto"
 # alias --save python "python3"
 # alias --save pip "pip3"
@@ -97,4 +97,4 @@ set --prepend tide_left_prompt_items bind_mode
 
 # Setting PATH for Python 3.12
 # The original version is saved in /Users/warren/.config/fish/config.fish.pysave
-set -x PATH "/Library/Frameworks/Python.framework/Versions/3.12/bin" "$PATH"
+# set -x PATH "/Library/Frameworks/Python.framework/Versions/3.12/bin" "$PATH"

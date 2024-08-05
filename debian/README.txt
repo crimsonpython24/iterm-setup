@@ -28,6 +28,7 @@ INSTALLATION LOG
     v. Exit; in terminal, type
       $ sudo systemctl enable zram
     vi. Reboot, and check with
+      $ sudo systemctl mask  "dev-nvme0n1p6.swap"
       $ cat /proc/swaps
 
 3. noatime
@@ -37,6 +38,7 @@ INSTALLATION LOG
     net.ipv4.tcp_congestion_control = bbr
     net.ipv4.tcp_notsent_lowat = 16384
     net.core.default_qdisc = fq_codel
+> Reboot system after these steps
 
 4. Install fish, cmake, and git
   > For anything that is missing, find their source repo and follow the instructions
@@ -44,6 +46,7 @@ INSTALLATION LOG
   $ echo /usr/local/bin/fish | sudo tee -a /etc/shells
   $ chsh -s /usr/bin/fish
   Finish off with compiling alacritty/geist nerd font and installing vim
+  https://github.com/alacritty/alacritty/blob/master/INSTALL.md
 
 5. corectrl
   > Possibly not worth all the effort?
@@ -95,7 +98,6 @@ INSTALLATION LOG
   i. sudo make install and follow the repository's setup guide
 
 6. Font book nerd font gnome fix
-  > apt install font-manager
   (Copy the OTF file into /usr/share/fonts/opentype)
   > run sudo fc-cache -f -v
   And then change the terminal font in tweaks

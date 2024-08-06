@@ -184,6 +184,15 @@ INSTALLATION LOG
 21. More extensions:
   a. clipboard-indicator (c-F9 for menu, disable tray icon)
   b. fail2ban (default config)
+    > nano /etc/fail2ban/jail.local
+      [sshd]
+      backend=systemd
+      enabled = true
+      port = ssh
+      filter = sshd
+      logpath = /var/log/auth.log
+      maxretry = 3
+    $ apt install python3-systemd
   c. Grand Theft Focus
   d. Flameshot
     https://flameshot.org/docs/guide/key-bindings/ (set as alt+shift+s)

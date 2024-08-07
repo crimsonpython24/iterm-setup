@@ -173,7 +173,7 @@ INSTALLATION LOG
 
 18. Show desktop icons
   Gtk4 Desktop Icons NG (DING) by smedius
-  Depends on nautilus (https://packages.debian.org/sid/all/nautilus-data/download)
+  Depends on nautilus (install from the official software store and not the online version)
 
 19. Input performance
   $ sudo apt install xserver-xorg-input-synaptics
@@ -196,10 +196,35 @@ INSTALLATION LOG
     $ sudo chmod a+x /opt/safing/portmaster/portmaster-start
 
     $ sudo /opt/safing/portmaster/portmaster-start --data /opt/safing/portmaster update
-    
+
+22. More minimal system tweaks:
+  a. $ nano /mnt/etc/apt/apt.conf.d/01autoremove
+    APT::Install-Recommends "false";
+    APT::Install-Suggests "false";
+    APT::AutoRemove::RecommendsImportant "false";
+    APT::AutoRemove::SuggestsImportant "false";
+  b. Not changing to dracut (yet) because the current ones (initramfs-tools) work fine
+    > may be able to get secure boot to work but that's a later concern
+    > bios upgrade may break current disk keys as well
+  c. enable non-free firmware
+    $ /etc/apt/sources.list 
+    deb http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware 
+    deb-src http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware
+    deb http://deb.debian.org/debian-security/ bookworm-security main contrib non-free non-free-firmware
+    deb-src http://deb.debian.org/debian-security/ bookworm-security main contrib non-free non-free-firmware
+    deb http://deb.debian.org/debian bookworm-updates main contrib non-free non-free-firmware
+    deb-src http://deb.debian.org/debian bookworm-updates main contrib non-free non-free-firmware
+  d. sudo nano /etc/systemd/system.conf  >>  DefaultTimeoutStopSec=15s
+  e. $ sudo apt-get install nohang preload
+    $ sudo systemctl enable nohang
+    $ sudo systemctl enable preload
+    $ sed -i 's|zram_checking_enabled = False|zram_checking_enabled = True|g' /etc/nohang/nohang.conf
+  f. $ sudo apt-get install tlp (and enable service by tlp start; config in "sudo nano /etc/tlp.conf")
+
+23. Fusuma setup (https://github.com/iberianpig/fusuma)
     
 -------------------- ARCHIVED --------------------
-22. Bluetooth quick connect (UPDATE may not be compatible, abort if Gnome cannot be updated, will break Qt otherwise):
+Bluetooth quick connect (UPDATE may not be compatible, abort if Gnome cannot be updated, will break Qt otherwise):
   a. Side quest: update Gnome to unstable version (v.46)
     Reference: https://raspberrytips.com/latest-gnome-installation-debian/
     $ nano /etc/apt/sources.list

@@ -230,7 +230,9 @@ INSTALLATION LOG
     $ sed -i 's|zram_checking_enabled = False|zram_checking_enabled = True|g' /etc/nohang/nohang.conf
   f. $ sudo apt-get install tlp (and enable service by tlp start; config in "sudo nano /etc/tlp.conf")
 
-23. Fusuma setup (https://github.com/iberianpig/fusuma)
+23. Fusuma setup (https://github.com/iberianpig/fusuma) might need more configs
+
+24. auto-cpufreq
     
 -------------------- ARCHIVED --------------------
 Bluetooth quick connect (UPDATE may not be compatible, abort if Gnome cannot be updated, will break Qt otherwise):

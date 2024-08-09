@@ -45,3 +45,5 @@
 - Font smoothing
   $ sudo ln -s /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d/
   $ sudo ln -s /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d/
+
+- Skype: https://web.archive.org/web/20240507201834/https://repo.skype.com/deb/pool/main/s/skypeforlinux/skypeforlinux_8.110.76.107_amd64.deb

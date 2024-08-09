@@ -47,3 +47,10 @@
   $ sudo ln -s /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d/
 
 - Skype: https://web.archive.org/web/20240507201834/https://repo.skype.com/deb/pool/main/s/skypeforlinux/skypeforlinux_8.110.76.107_amd64.deb
+
+- Turn off Wifi powersave
+  > /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf
+  [connection]
+  wifi.powersave = 2
+
+- $ sudo ufw logging off

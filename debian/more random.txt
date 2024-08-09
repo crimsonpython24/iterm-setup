@@ -1,0 +1,47 @@
+- For
+  $ cat /sys/block/nvme0n1/queue/scheduler
+  check that the I/O scheduler is either [none] or [mq-deadline]
+  $ echo mq-deadline | sudo tee /sys/block/sda/queue/scheduler
+
+- GRUB_CMDLINE_LINUX_DEFAULT="... amd_pstate=active"
+
+- Mounting options: noatime,commit=60,nobarrier
+
+- Possibly for desktop setups only??
+  $ sudo apt install tuned
+  $ sudo tuned-adm profile latency-performance
+
+- Cut cache cuz we got rammmmmmmm
+  https://blog.littlero.se/post/linux-tuning-for-write-heavy-system/
+  $ vm.dirty_background_ratio = 2
+  $ vm.dirty_ratio = 1
+  (in /etc/sysctl.conf, reload with sysctl -p)
+
+- Some kernel black magic
+  vm.vfs_cache_pressure=50
+  kernel.sched_autogroup_enabled=0
+  kernel.sched_cfs_bandwidth_slice_us=3000
+  kernel.sched_migration_cost_ns=5000000
+  kernel.sched_min_granularity_ns=10000000
+  kernel.sched_wakeup_granularity_ns=15000000
+
+- amd_pstate.enable=1 amd_pstate.shared_mem=1 in /etc/default/grub
+
+- Ananicy (https://github.com/nefelim4ag/Ananicy?tab=readme-ov-file) setup
+  Schedtool prereq
+
+- systemctl enable fstrim.timer
+
+- /etc/systemd/journald.conf
+  Storage=volatile
+  SystemMaxUse=50M
+
+- use tmpfs instead of /tmp if really desperate
+
+- zswap: https://blog.jacobstoner.com/zswap-improve-memory-performance-on-linux/
+
+- setup io_uring?
+
+- Font smoothing
+  $ sudo ln -s /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d/
+  $ sudo ln -s /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d/

@@ -14,7 +14,7 @@ INSTALLATION LOG
 
 3. Xanmod
   Follow things on https://xanmod.org/
-  If AMD GPU firmwares are lacking, go to https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/log/
+  Can ignore firmware warnings for AMD GPU (some features are unavailable for integrated graphics)
 
 4. Theme: https://github.com/vinceliuice/Fluent-gtk-theme
   > reboot after these steps
@@ -26,7 +26,7 @@ INSTALLATION LOG
     https://github.com/M-Gonzalo/zramd
   b. Steps
     i. In "/etc/modules-load.d/zram.conf" type zram
-    ii. In "/etc/udev/rules.d/99-zram.rules" type KERNEL=="zram0", ATTR{disksize}="512M",TAG+="systemd"
+    ii. In "/etc/udev/rules.d/99-zram.rules" type KERNEL=="zram0", ATTR{disksize}="8192M",TAG+="systemd"
     iii. In "/etc/fstab" comment out the line starting with /swap.img
     iv. In "/etc/systemd/system/zram.service" type
       [Unit]
@@ -62,7 +62,7 @@ INSTALLATION LOG
   $ sudo apt install fish
   $ echo /usr/local/bin/fish | sudo tee -a /etc/shells
   $ chsh -s /usr/bin/fish
-  Finish off with compiling alacritty/geist nerd font and installing vim
+  Finish off with adding geist nerd font and installing vim (local)
   https://github.com/alacritty/alacritty/blob/master/INSTALL.md
 
 8. corectrl
@@ -164,8 +164,8 @@ INSTALLATION LOG
 15. Check Desktop Env
   $ echo $XDG_SESSION_TYPE
 
-16. Change swappiness to 0
-  /etc/sysctl.conf --> vm.swappiness=0
+16. Change swappiness to more ram
+  /etc/sysctl.conf --> vm.swappiness=80
   $ cat /proc/sys/vm/swappiness
 
 17. Debloat
@@ -179,7 +179,7 @@ INSTALLATION LOG
   $ sudo apt install xserver-xorg-input-synaptics
   $ sudo apt upgrade libinput-bin
 
-20. Auto-cpufreq (not used currently since Lenovo has a built-in firmware)
+20. Auto-cpufreq + daemon setup
 
 21. More extensions:
   a. clipboard-indicator (c-F9 for menu, disable tray icon)
@@ -232,8 +232,6 @@ INSTALLATION LOG
 
 23. Fusuma setup (https://github.com/iberianpig/fusuma) might need more configs
 
-24. auto-cpufreq
-    
 -------------------- ARCHIVED --------------------
 Bluetooth quick connect (UPDATE may not be compatible, abort if Gnome cannot be updated, will break Qt otherwise):
   a. Side quest: update Gnome to unstable version (v.46)

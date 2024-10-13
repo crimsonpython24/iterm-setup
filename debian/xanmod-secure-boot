@@ -1,0 +1,34 @@
+--Secure Boot with Xanmod--
+
+To make sure the process works, clear out previous keys and reset to factory default keys (if UEFI allows) & clear all non-factory keys
+
+Archive from https://forums.linuxmint.com/viewtopic.php?t=417551
+
+This is more of a PSA than anything, but before doing anything, if you have ultra-fast boot in your UEFI options and it is enabled: Turn that off now. At least in my experience, ultra-fast boot doesn't bother loading any of your devices at startup except the devices that came with the computer, so if anything goes wrong at startup, and you lost those devices, you'll be stuck staring at the GNU Grub interface for eternity… or until you do something like resetting your UEFI settings. Either way, just avoid that same headache that I encountered and turn it off.
+Check your UEFI to ensure it has similar settings. This can usually be done by holding an 'F#' key as the computer's booting or something similar. If it has secure boot, look for an option that says something similar to "Enroll Efi Image." In my case, it was under a sub-menu called "key management." To keep it short, this option allows you to add additional, signed signatures to that database that I mentioned, which is necessary to prevent secure boot from strangling Xanmod to death, and thus prevent your computer from booting. If you check thoroughly and can't find both of these options, then these instructions probably won't apply to you, and you'll have to either find another guide, or disable secure boot if that option is present. Sorry.
+Now, first things first, we need to get our copy of Xanmod. You can do this via the instructions under the "APT Repository" section on https://xanmod.org/. I hope you're not allergic to the terminal. Technically, you could also use the "Synpatic Package Manager," but I'm not gonna print instructions that could become out-of-date just for that.
+After it's installed, go to the /boot folder. You should now see a file called "vmlinuz-[version crap]-xanmod." This means that the kernel was downloaded, built, and installed successfully. **Do not restart your computer yet.**
+Next, you need to open the 'EFI' folder in a new tab by either middle clicking it or using the context menu. The folder's probably going to be locked behind root, and thus will ask you for your password, which you'll have to enter. While we're here, verify that the folders "BOOT" and "ubuntu" are present. Once you can see them, this puts you in an ideal position for the next step.
+Return to the non-root tab (which should still be looking at the /boot folder), and copy the file named "vmlinuz-[version crap]-xanmod" to your clipboard by either hitting Ctrl+C or using the context menu. Then, return to the root tab, and paste the file into the "ubuntu" folder.
+With that tab still open, open the "ubuntu" folder that we just pasted into, find the newly pasted file and add a ".efi" to the end of its name [I don't know why it wasn't there to begin with]. This step may not be necessary, but it ensures that the computer will recognize it was a .efi file.
+Finally, we can restart the computer, and re-open the UEFI. Go back to the "Enroll Efi Image" option that was mentioned earlier, and click it. It should open some sort of menu containing that EFI folder that we pasted into earlier. After that, simply find the xanmod efi file in the ubuntu folder, and click it to integrate it. If you need to confirm it, just click 'yes.' That should add it to your UEFI's list of 'signatures,' thus allowing the xanmod kernel to load.
+Restart the computer, and verify that Xanmod loaded successfully. If not, then feel free to try step 7 on the other .efi files present in that folder. Though in my experience, even though all of them may not be enrolled, they're not necessary, but if you're still having issues that's the first thing I'd try. If none of this works, then sadly your only options are to either pioneer your own solution or to admit defeat and disable secure boot.
+
+Note: for debian, place into /boot/efi/debian or somewhere. You should NOT make a new debian folder somewhere in the /boot partition but use the one that's already there
+
+Find the GUID if required by UEFI:
+sudo blkid | grep EFI
+In a dual boot machine with Windows, the EFI will be at /boot/efi managed by Windows, and it's fine to use that UID
+
+The string should look like
+/dev/nvmeX: UUID="XXXX-XXXX" TYPE="vfat" PARTLABEL="EFI System Partition" PARTUUID="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+
+Other attempts if the mountpoint is elsewhere:
+- sudo blkid | grep /boot
+- sudo blkid | grep '/'
+
+In UEFI settings, there might be a blacklist (DBX) of signatures. Remove Debian from there (keep Canonical on)
+Besides the EFI from Xanmod above, also enroll "shimx64.efi" from native Debian with the same GUID (no need to regenerate this one, possibly bc it's shipped with Debian)
+Enroll bolth EFIs, reboot, boot into UEFI, turn on secure boot, and reboot again
+
+Should not need more steps than these, at least the firmware at the moment does not require MOK keys or extra certificates

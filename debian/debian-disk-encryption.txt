@@ -1,0 +1,359 @@
+Archived from https://www.dwarmstrong.org/minimal-debian/ https://www.dwarmstrong.org/fde-debian/
+
+Full disk encryption (including boot) on Debian Bookworm
+
+Last edited on 2023-06-21 • Tagged under  #debian   #linux   #encrypt   #lvm 
+
+Devices that go out and about such as laptops and backup external drives should have their contents encrypted to guard against loss or theft. Plus you really want to encrypt everything (not just home). All sorts of sensitive information can seep into logs, temp files and swap memory.
+
+Linux installers that encrypt root and home and swap usually create a separate, unencrypted boot partition. This allows the boot loader to discover the Linux kernel before proceeding to decrypt and mount other partitions.
+
+However, GRUB2 does support booting from an encrypted boot courtesy of its cryptodisk module. Debian's installer does not provide the option of encrypting boot. But it is possible!
+
+The following steps install a minimal Debian setup that makes use of the entire disk - minus a small OS independent efi partition - as a single Linux Unified Key Setup (LUKS) encrypted partition that is used by the Logical Volume Manager (LVM) to create "virtual partitions" (Logical Volumes or LVs). Installing LVM on top of the encrypted partition allows the creation of multiple LVs protected by a single passphrase, and dynamic resizing of LVs as needed.
+
+My example system uses UEFI boot and the encrypted partition is vda3.
+
+This is how I do it ...
+1. Install Debian
+
+A visual walk-through using the Debian network installer to create a console-only base configuration using LVM on LUKS.
+2. Convert LUKS2 device to LUKS1
+
+Important! To enable GRUB to unlock a LUKS encrypted device that contains /boot that device needs to be in LUKS format version 1. Debian's installer by default creates LUKS2 devices.
+
+Check the LUKS format version on the root device (example: vda3) by running luksDump ...
+
+$ sudo cryptsetup luksDump /dev/vda3
+LUKS header information
+Version:       	2
+[...]
+Keyslots:
+  0: luks2
+
+Output is Version: 2 and in Keyslots there is a single occupied slot - 0: luks2 - containing the encryption passphrase.
+
+Existing LUKS2 devices can be converted to LUKS1, but not on a mounted filesystem.
+
+Reboot the computer. At the GRUB menu, enter e to edit, add break=mount to the end of the linux line for the kernel, then press F-10 to boot. System drops into a initramfs shell.
+
+Key slots need to be converted to use the PBKDF2 algorithm exclusively prior to LUKS format version downgrade ...
+
+(initramfs) cryptsetup luksConvertKey --pbkdf pbkdf2 /dev/vda3
+(initramfs) cryptsetup convert --type luks1 /dev/vda3
+(initramfs) cryptsetup luksDump /dev/vda3
+
+Running luksDump now outputs Version: 1 and Key Slot 0: ENABLED and key slots 1 through 7 DISABLED.
+
+CTRL-ALT-Delete to reboot.
+3. Read-only
+
+Ensure data is not modified while being copied by remounting /boot read-only ...
+
+$ sudo mount -o remount,ro /boot
+
+4. Move boot to root
+
+Copy the contents of boot to boot.tmp residing on the root filesystem ...
+
+$ sudo cp -axT /boot /boot.tmp
+
+Replace the old boot mountpoint with the new directory ...
+
+$ sudo umount /boot/efi && sudo umount /boot
+$ sudo rmdir /boot
+$ sudo mv -T /boot.tmp /boot
+$ sudo mount /boot/efi
+
+5. Fstab
+
+Modify /etc/fstab by commenting out the entry for the /boot mountpoint ...
+
+#UUID=... /boot           ext2    defaults        0       2
+
+6. GRUB
+
+Add the CRYPTODISK module to GRUB ...
+
+$ echo "GRUB_ENABLE_CRYPTODISK=y" | sudo tee --append /etc/default/grub
+$ sudo update-grub
+$ sudo grub-install /dev/vda
+
+Verify that grub.cfg has entries for insmod cryptodisk and insmod luks ...
+
+$ sudo grep 'cryptodisk\|luks' /boot/grub/grub.cfg
+
+Otherwise, add cryptodisk and luks to GRUB_PRELOAD_MODULES in /etc/default/grub and re-install grub.
+
+Reboot.
+
+System prompts Attempting to decrypt master key... for passphrase to unlock hd0,gpt3. Enter passphrase and after a short delay the GRUB menu appears. Later, a second prompt appears to re-enter the passphrase to unlock vda3_crypt.
+
+Note: GRUB stage input uses the qwerty keyboard layout and only one attempt is allowed to enter the correct passphrase (in case of incorrect entry, a reboot is required). But when the kernel prompts a second time for the passphrase to unlock the LVM volume it does use any previously assigned keymap.
+7. Keyfile
+
+Add a keyfile to avoid having to enter the passphrase twice.
+
+Generate an encryption keyfile and place in a LUKS key slot ...
+
+$ sudo dd bs=512 count=4 if=/dev/random of=/keyfile iflag=fullblock
+$ sudo chmod 600 /keyfile
+$ sudo cryptsetup luksAddKey /dev/vda3 /keyfile
+$ sudo cryptsetup luksDump /dev/vda3
+
+Keyfile has been added to Key Slot 1: ENABLED. Original passphrase occupies Key Slot 0: ENABLED, and there remain 6 free slots DISABLED.
+
+Modify /etc/crypttab and replace none with the key file path (/keyfile) and the key-slot it occupies (key-slot=1) ...
+
+vda3_crypt UUID=<a_long_string_of_characters> /keyfile luks,discard,key-slot=1
+
+8. Initramfs
+
+Modify /etc/cryptsetup-initramfs/conf-hook with ...
+
+KEYFILE_PATTERN="/keyfile"
+
+In /etc/initramfs-tools/initramfs.conf, set UMASK to root-only access to avoid leaking key material ...
+
+$ echo UMASK=0077 | sudo tee --append /etc/initramfs-tools/initramfs.conf
+
+Re-generate the initramfs image ...
+
+$ sudo update-initramfs -u -k all
+
+Verify the image has the restrictive permissions and includes the key ...
+
+$ stat -L -c "%A  %n" /initrd.img
+-rw-------  /initrd.img
+$ sudo lsinitramfs /initrd.img | grep "^cryptroot/keyfiles/"
+cryptroot/keyfiles/vda3_crypt.key
+
+Reboot. Now there is only the single prompt for a passphrase!
+
+
+
+
+
+3. First boot
+
+GRUB
+
+User is prompted for the passphrase to unlock the encrypted root partition:
+
+Unlock root passphrase
+
+A second prompt to unlock the encrypted home partition (later we create a keyfile to forego entering two passphrases):
+
+Unlock home passphrase
+
+Welcome to Debian!
+
+Login
+4. Configure Debian
+4.1 Check for errors
+
+Failed systemd services:
+
+$ sudo systemctl --failed
+
+High priority errors in the systemd journal:
+
+$ sudo journalctl -p 3 -xb
+
+4.2 Network
+
+By default, wired (ethernet) interfaces are configured for auto-detection and to use DHCP.
+
+Display all detected network interfaces along with their IP and MAC addresses:
+
+ip addr
+
+Debian's network interfaces are configured in /etc/network/interfaces and controlled by the ifup and ifdown commands.
+
+Example entry for wired interface using DHCP:
+
+allow-hotplug enp0s31f6
+iface enp0s31f6 inet dhcp
+
+For wireless:
+
+allow-hotplug wlp61s0
+iface wlp61s0 inet dhcp
+  wpa-ssid <wifi_access_point_name>
+  wpa-psk  <wifi_passphrase>
+
+4.3 Package repositories
+
+Debian uses separate archives to distinguish between software packages based on their licenses:
+
+    Main is enabled by default and includes everything that satisfies the conditions of the Debian Free Software Guidelines.
+    Contrib packages are open-source themselves but rely on software in non-free to work.
+    Non-free contains packages that do not meet all the conditions of the DFSG but can be freely distributed.
+    Non-free-firmware (introduced in Debian 12) contains non-free firmware binaries packaged for devices that would be completely non-functional without them (example: many wireless cards).
+    Backports contains packages drawn from the testing (and sometimes unstable) archive and modified to work in the current stable release.
+
+All backports are disabled by default (to prevent unintended system upgrades) and are installed on a per PACKAGE basis by running:
+
+$ sudo apt -t bookworm-backports install PACKAGE
+
+Modify /etc/apt/sources.list to add contrib, non-free, non-free-firmware, and backports:
+
+# cat <<EOF > /etc/apt/sources.list
+> deb http://deb.debian.org/debian/ bookworm main contrib non-free non-free-firmware
+> deb-src http://deb.debian.org/debian/ bookworm main contrib non-free non-free-firmware
+>
+> deb http://security.debian.org/debian-security bookworm-security main contrib non-free non-free-firmware
+> deb-src http://security.debian.org/debian-security bookworm-security main contrib non-free non-free-firmware
+>
+> deb http://deb.debian.org/debian/ bookworm-updates main contrib non-free non-free-firmware
+> deb-src http://deb.debian.org/debian/ bookworm-updates main contrib non-free non-free-firmware
+>
+> deb http://deb.debian.org/debian/ bookworm-backports main contrib non-free non-free-firmware
+> deb-src http://deb.debian.org/debian/ bookworm-backports main contrib non-free non-free-firmware
+> EOF
+
+Any time sources.list is modified its necessary to update the package database:
+
+$ sudo apt update
+
+4.4 Upgrade
+
+$ sudo apt full-upgrade
+
+4.5 (Optional) Network manager
+
+Install a network manager utility. Packages network-manager and network-manager-gnome provide the console nmcli and graphical nm-applet clients respectively . Comment out (deactivate) any entries in interfaces that will be managed by network-manager.
+4.6 Sudo without password
+
+Allow user foo to execute superuser commands without being prompted for a password.
+
+Create /etc/sudoers.d/sudoer_foo:
+
+$ echo 'foo ALL=(ALL) NOPASSWD: ALL' | sudo tee /etc/sudoers.d/sudoer_foo
+
+4.7 Console font
+
+Discover available fonts in /usr/share/consolefonts.
+
+Default font might prove too small on high resolution displays. Set and display a font (example: Lat15-TerminusBold22x11) for the current session:
+
+$ sudo setfont Lat15-TerminusBold22x11
+
+To make the selection persistent:
+
+$ sudo dpkg-reconfigure console-setup
+$ sudo setupcon
+
+4.8 Keyboard
+
+Default console keymap is US QWERTY.
+
+For a different keymap, install:
+
+$ sudo apt install -y console-data
+
+Available keymaps are listed in /usr/share/keymaps/.
+
+Select a different keymap by running:
+
+$ dpkg-reconfigure keyboard-configuration
+$ setupcon
+
+Enable use of desired keymap when entering LUKS passphrase in GRUB by rebuilding initramfs:
+
+$ sudo update-initramfs -u -k all
+
+4.9 Sysctl
+
+If a non-root user runs dmesg to read the contents of the kernel message buffer they will see:
+
+dmesg: read kernel buffer failed: Operation not permitted
+
+To allow users to read the kernel log, modify /etc/sysctl.conf by adding:
+
+kernel.dmesg_restrict = 0
+
+Reload the configuration:
+
+$ sudo sysctl -p
+
+4.10 Command not found
+
+Automatically search repositories when entering an unrecognized command, courtesy of the command-not-found package:
+
+$ sudo apt install command-not-found apt-file
+$ sudo apt-file update && sudo update-command-not-found
+
+Re-login to activate.
+4.11 Locate
+
+Setup the plocate command and database for finding files:
+
+$ sudo apt install plocate && sudo /etc/cron.daily/plocate
+
+4.12 Custom user prompt
+
+Modify ~/.bashrc and create a colourful custom prompt:
+
+# colour codes
+GREEN="\\[\\e[1;32m\\]"
+YELLOW="\\[\\e[1;33m\\]"
+BLUE="\\[\\e[1;34m\\]"
+MAGENTA="\\[\\e[1;35m\\]"
+WHITE="\\[\\e[1;37m\\]"
+RESET="\\[\\e[0m\\]"
+
+# Set a two-line prompt. If accessing via ssh include 'ssh-session' message.
+if [[ -n "$SSH_CLIENT" ]]; then
+    ssh_message="-ssh_session"
+fi
+PS1="${MAGENTA}\\u ${WHITE}at ${GREEN}\\h${YELLOW}${ssh_message} ${WHITE}in ${BLUE}\\w \\n$WHITE\$${RESET} "
+
+Add aliases and functions, enable unlimited history, and more.
+
+Source: .bashrc
+4.13 Firmware
+
+Intel and AMD processors may periodically need updates to their firmware.
+
+Microcode can be updated (and kept in volatile memory) during boot by installing either intel-microcode or amd64-microcode (AMD):
+
+$ sudo apt install intel-microcode
+
+See: Microcode
+4.14 Use zram for swap
+
+Instead of using a separate swap partition or swapfile, an alternative is to create a swap device in RAM itself with the kernel module zram. Read more
+4.15 Secure access using SSH keys
+
+Configure remote access to the target device using crypto keys, and disable password logins. Read more
+4.16 Keyfile to unlock home
+
+After entering the passphrase to unlock the encrypted root partition at system boot, a keyfile stored on the now-unlocked partition can be used to auto-unlock encrypted home.
+
+Create crypthome.key and restrict access to root:
+
+$ sudo dd bs=512 count=4 iflag=fullblock if=/dev/random of=/crypthome.key
+$ sudo chmod 400 /crypthome.key
+
+Add keyfile to the LUKS key slot of the home partition. In this HOWTO example, that would be /dev/vda4:
+
+$ sudo cryptsetup luksAddKey /dev/vda4 /crypthome.key
+
+Verify:
+
+$ sudo cryptsetup luksDump /dev/vda4
+...
+Keyslots:
+  0: luks2
+...
+  1: luks2
+...
+
+Original passphrase occupies Key Slot 0 and the keyfile has been added to Key Slot 1.
+
+Modify /etc/crypttab and replace none with the key file path and the key-slot it occupies (key-slot=1):
+
+vda4_crypt UUID=<a_long_string_of_characters> /crypthome.key luks,discard,key-slot=1
+
+Reboot. Now there is only the single prompt for an encrypted passphrase.

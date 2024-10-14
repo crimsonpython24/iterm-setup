@@ -32,7 +32,7 @@ New installation log based on KDE
     > net.core.default_qdisc = fq
     $ sysctl net.ipv4.tcp_congestion_control
 
-7. Install fish, cmake, and git
+4. Install fish, cmake, and git
     > For anything that is missing, find their source repo and follow the instructions
     $ sudo apt install fish
     $ echo /usr/local/bin/fish | sudo tee -a /etc/shells
@@ -40,17 +40,17 @@ New installation log based on KDE
     Finish off with adding geist nerd font and installing vim (local)
     https://github.com/alacritty/alacritty/blob/master/INSTALL.md
 
-8. Alacritty: font book nerd font
+5. Alacritty: font book nerd font
     (Copy the OTF file into /usr/share/fonts/opentype)
     > run sudo fc-cache -f -v
     then load the toml file
 
-9. gnupg
+6. gnupg
     Should come with debian. Follow github instructions on keygen
     Patch:
     $ git config --global user.email yjwarrenwang@protonmail.com
 
-10. vscodium
+7. vscodium
     in ~/.config/VSCodium, create product.json, and then add
     {
         "extensionsGallery": {
@@ -61,7 +61,7 @@ New installation log based on KDE
         }
     }
 
-11. input settings
+8. input settings
     $ sudo apt install fcitx5-pinyin
     $ sudo apt install --install-recommends fcitx5 fcitx5-chinese-addons kde-config-fcitx5
     fcitx5 should then be set as the default input method & the virtual keyboard
@@ -69,7 +69,7 @@ New installation log based on KDE
     if it still doesn't work, try to add the US keyboard layout in settings
     go thorugh the debian package wiki (the arch and the general wiki one don't help at all)
 
-12. Extensions
+9. Extensions
     - gcolor3 for color picker
     - fail2ban (default config)
         echo -e "[sshd]\nbackend=systemd\nenabled=true" | sudo tee /etc/fail2ban/jail.local  
@@ -80,10 +80,10 @@ New installation log based on KDE
     - Flameshot
     (should not need auto-cpufreq because kde has its own power governor)
 
-13. Check Desktop Env
+10. Check Desktop Env
     - echo $XDG_SESSION_TYPE
 
-14. More minimal system tweaks:
+11. More minimal system tweaks:
     a. $ nano /mnt/etc/apt/apt.conf.d/01autoremove
         APT::Install-Recommends "false";
         APT::Install-Suggests "false";
@@ -93,3 +93,23 @@ New installation log based on KDE
         $ sudo systemctl enable nohang
         $ sudo systemctl enable preload
         $ sed -i 's|zram_checking_enabled = False|zram_checking_enabled = True|g' /etc/nohang/nohang.conf
+
+12. Installing standard notes
+    Download StandardNotes-xxx.AppImage, copy to /opt/standardnotes/ folder, and rename it to StandardNotes.AppImage
+    Make it executable chmod u+x StandardNotes.AppImage (also try +x if permission is denied after these steps)
+    Download standardnotes-logo.svg file and copy it to /opt/standardnotes/
+    $ sudo nano ~/.local/share/applications/standardnotes.desktop
+
+    [Desktop Entry]
+    Name=StandardNotes
+    Exec=/opt/standardnotes/StandardNotes.AppImage %u
+    Icon=/opt/standardnotes/standardnotes-logo.svg
+    Comment=Draw Freely
+    Type=Application
+    Terminal=false
+    Encoding=UTF-8
+    Categories=Utility;
+    StartupNotify=true
+    StartupWMClass=org.standardnotes.StandardNotes
+
+    $ update-desktop-database ~/.local/share/applications

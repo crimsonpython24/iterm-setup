@@ -114,7 +114,7 @@ New installation log based on KDE
 
     $ update-desktop-database ~/.local/share/applications
 
-13. Additional settings
+13. Additional settings NOTE most likely uninstall power-profiles-daemon, thing's a fraud
     $ sudo apt install rkhunter
     $ sudo rkhunter --check
     $ sudo powertop --calibrate (powertop comes with kde but not calibrated)

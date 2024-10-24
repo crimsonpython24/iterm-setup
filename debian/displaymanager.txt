@@ -1,0 +1,10 @@
+sudo apt install sddm
+sudo dpkg-reconfigure sddm
+sudo rm /etc/systemd/system/display-manager.service
+sudo ln -s /lib/systemd/system/sddm.service /etc/systemd/system/display-manager.service
+sudo systemctl enable sddm
+sudo systemctl start sddm
+
+systemctl get-default
+sudo systemctl set-default graphical.target
+make sure this option is not at multi-user

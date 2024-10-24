@@ -1,0 +1,14 @@
+wget http://ftp.fr.debian.org/debian/pool/non-free/f/firmware-nonfree/firmware-atheros_20221214-3_all.deb
+sudo apt install ./firmware-atheros_20221214-3_all.deb
+
+(or install whatever the newest version is in the wget url)
+
+Next, run sudo apt upgrade/update and then reboot
+Check software updater afterwards to make sure that the atheros ath11k firmware is in fact the newest one because the wget url may be behind the one in the linux kernel
+
+(non-free)
+apt install isenkram
+sudo isenkram-autoinstall-firmware
+might also patch the amdgpu firmware
+
+last resort download from https://git.codelinaro.org/clo/ath-firmware/ath11k-firmware

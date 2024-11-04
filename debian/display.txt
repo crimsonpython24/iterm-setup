@@ -1,0 +1,100 @@
+1. SDDM freezing on external display ("DP-1")
+$ sudo mkdir -p /etc/sddm/wayland-session.d
+$ sudo nano /etc/sddm/wayland-session.d/monitor-setup.sh
+
+#!/bin/sh
+export KSCREEN_CONFIG_DIR=/etc/sddm/kscreen/
+
+$ sudo chmod +x /etc/sddm/wayland-session.d/monitor-setup.sh
+
+$ sudo mkdir -p /etc/sddm/kscreen/
+$ sudo nano /etc/sddm/kscreen/monitor-setup.json
+
+{
+    "outputs": [
+        {
+            "name": "eDP-1",
+            "enabled": false,
+            "priority": 0
+        },
+        {
+            "name": "DP-1",
+            "enabled": true,
+            "priority": 1,
+            "mode": {
+                "size": {
+                    "width": 2560,
+                    "height": 1440
+                },
+                "refresh": 60000
+            },
+            "pos": {
+                "x": 0,
+                "y": 0
+            }
+        }
+    ]
+}
+
+
+2. Window going to the "hidden" display after sleeping
+$ mkdir -p ~/.local/share/kwin/scripts/forcemonitor/contents/code/
+$ nano ~/.local/share/kwin/scripts/forcemonitor/contents/code/main.js
+
+workspace.clientAdded.connect(function(client) {
+    if (!client.normalWindow) {
+        return;
+    }
+
+    // Find the DP-1 output
+    const externalOutput = workspace.outputs.find(output => output.name === "DP-1");
+    if (externalOutput) {
+        client.output = externalOutput;
+    }
+});
+
+// Handle existing windows after wake-up
+function moveExistingWindows() {
+    const externalOutput = workspace.outputs.find(output => output.name === "DP-1");
+    if (!externalOutput) return;
+
+    const clients = workspace.clientList();
+    for (let i = 0; i < clients.length; i++) {
+        if (clients[i].normalWindow) {
+            clients[i].output = externalOutput;
+        }
+    }
+}
+
+workspace.outputsChanged.connect(moveExistingWindows);
+
+$ nano ~/.local/share/kwin/scripts/forcemonitor/metadata.desktop
+
+[Desktop Entry]
+Name=Force External Monitor
+Comment=Force windows to external monitor
+Icon=preferences-system-windows
+Type=Service
+X-Plasma-API=javascript
+X-Plasma-MainScript=code/main.js
+X-KDE-ServiceTypes=KWin/Script
+X-KDE-PluginInfo-Name=forcemonitor
+X-KDE-PluginInfo-Version=1.0
+X-KDE-PluginInfo-Author=YourName
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-EnabledByDefault=true
+
+$ kwriteconfig5 --file kwinrc --group Plugins --key forcemonitorEnabled true
+$ qdbus org.kde.KWin /KWin reconfigure
+
+$ sudo nano /etc/sddm.conf.d/wayland.conf
+
+[General]
+DisplayServer=wayland
+GreeterEnvironment=QT_QPA_PLATFORM=wayland,QT_WAYLAND_SHELL_INTEGRATION=layer-shell
+
+[Wayland]
+CompositorCommand=kwin_wayland --drm --no-lockscreen
+EnableHiDPI=true
+
+$ sudo systemctl restart sddm

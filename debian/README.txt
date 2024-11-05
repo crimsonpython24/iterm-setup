@@ -1,6 +1,6 @@
 New installation log based on KDE
 
-0. Pre-setup: see disk encryption and xanmod secure boot settings before proceeding 
+0. Pre-setup: see disk encryption and xanmod secure boot settings before proceeding
 
 1. Installation packages
     a. network-manager network-manager-openvpn
@@ -72,7 +72,7 @@ New installation log based on KDE
 9. Extensions
     - gcolor3 for color picker
     - fail2ban (default config)
-        echo -e "[sshd]\nbackend=systemd\nenabled=true" | sudo tee /etc/fail2ban/jail.local  
+        echo -e "[sshd]\nbackend=systemd\nenabled=true" | sudo tee /etc/fail2ban/jail.local
         $ sudo cat /etc/fail2ban/jail.local
         > [sshd]
         > backend=systemd
@@ -132,4 +132,7 @@ New installation log based on KDE
 
     tlp/tlp-rdw settings
     > edit /etc/tlp.conf
-    $ cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor  
+    $ cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+
+    * for this option, uninstall power-profiles-daemon that come with kde, but use
+      tlp-rdw and powertop instead

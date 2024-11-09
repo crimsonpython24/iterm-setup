@@ -15,9 +15,9 @@ user_pref("layout.css.visited_links_enabled", false);
 user_pref("network.http.windows-sso.enabled", false);
 
 // 12xx
-user_pref("security.mixed_content.block_display_content", true);
-user_pref("dom.security.https_only_mode_pbm", true);
-user_pref("dom.security.https_only_mode.upgrade_local", true);
+// user_pref("security.mixed_content.block_display_content", true);
+// user_pref("dom.security.https_only_mode_pbm", true);
+// user_pref("dom.security.https_only_mode.upgrade_local", true);
 
 // 17xx
 user_pref("privacy.userContext.enabled", false);
@@ -25,8 +25,8 @@ user_pref("privacy.userContext.ui.enabled", false);
 user_pref("privacy.userContext.newTabContainerOnLeftClick.enabled", false);
 
 // 20xx
-user_pref("media.gmp-provider.enabled", false);
-user_pref("media.peerconnection.ice.no_host", true);
+// user_pref("media.gmp-provider.enabled", false);
+// user_pref("media.peerconnection.ice.no_host", true);
 
 // 26xx
 // user_pref("browser.download.alwaysOpenPanel", true);
@@ -80,6 +80,6 @@ user_pref("browser.taskbar.lists.recent.enabled", false);
 user_pref("browser.taskbar.lists.tasks.enabled", false);
 
 // 55xx
-user_pref("javascript.options.wasm", false);
+// user_pref("javascript.options.wasm", false);
 user_pref("media.eme.enabled", false);
 user_pref("browser.eme.ui.enabled", false);

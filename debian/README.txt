@@ -8,8 +8,9 @@ New installation log based on KDE
     b. kde-plasma-desktop (don't purge, it's minimal enough)
     c. ufw plasma-firewall --> ufw enable
     d. grub splash screen: /etc/default/grub add splash after quiet
-    e. use power-profiles-daemon instead of tlp (better integration)
-    f. intall network-manager-config-connectivity-debian for prompts
+    e. intall network-manager-config-connectivity-debian for prompts
+
+NOTE: do not try to compile corectrl. Either (1) you have to be on unstable, or (2) it wouldn't work on KDE with the method in debian.old because updating the .so file from Conda will break SDDM. Plus, (3) even if you are building through conda, you will need to link apt stuff into conda's CXX environment, which just wouldn't work. The version on backports is 1.3 ish
 
 2. Clamav
     First download Clamav from the official website
